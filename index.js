@@ -7,7 +7,7 @@ async function go(){
         const issueNumber = core.getInput('issue-number');
         const repository = process.env.GITHUB_REPOSITORY;
         const repoTokens = repository.split("/");
-        const owner = repoToken[0];
+        const owner = repoTokens[0];
         const repo = repoTokens[1];
         core.debug(`repository: ${repository}`);
         const octokit = github.getOctokit(token);
