@@ -20,6 +20,7 @@ async function go(){
         core.debug(`repository: ${repository}`);
         const octokit = github.getOctokit(token);
         let thisIssue = await octokit.issues.get(cfg);
+        console.log(thisIssue);
         let body = thisIssue.body;
         console.log(body);
         console.log(thisIssue.body_html);
