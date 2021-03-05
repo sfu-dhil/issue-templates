@@ -3,16 +3,22 @@ const core = require('@actions/core');
 const github = require('@actions/github');
 
 try{
-    const inputs = {
-        token: core.getInput('token'),
-        issueNumber: core.getInput("issue-number")
-    };
-    core.debug(`Inputs: ${inspect(inputs)}`);
+    const token = core.getInput('token');
+    const issueNumber = core.getInput('issue-number');
     const repository = process.env.GITHUB_REPOSITORY;
-    const repo = repository.split("/");
+    const repoTokens = repository.split("/");
+    const owner = repoToken[0];
+    const repo = repoTokens[1];
     core.debug(`repository: ${repository}`);
-    const octokit = new github.Github(inputs.token);
-    core.info(inputs.issueNumber);
+    const octokit = github.getOctokit(token);
+    await octokit.issues.addLabels({
+        owner: owner,
+        repo: repo,
+        issue_number: issueNumber,
+        labels: ['test']
+    });
+    core.info(issueNumber);
+
 } catch (e){
     console.log(e);
 }
