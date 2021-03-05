@@ -25,4 +25,5 @@ jobs:
         uses: ./
         id: validate
         with:
+          token: ${{ secrets.GITHUB_TOKEN }}
           issue-number: ${{ github.event.issue.number }}
