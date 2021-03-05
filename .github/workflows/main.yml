@@ -1,12 +1,9 @@
-name: Issue-Checker
+name: Main DHIL Tests Test
 
-# Run this workflow every time a new commit pushed to your repository
+# Run this workflow every time a new issue is made on the repository
 on:
   issues:
     types: [opened]
-  push:
-    branches:
-      - main
 
 jobs:
   # Set the job key. The key is displayed as the job name
@@ -22,5 +19,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Test this
-        run: echo This is a test
+      - name: Test Issue-checker
+        uses: ./
+        id: validate
+        with:
+          issue-number: ${{ github.event.issue.number }}

@@ -1,0 +1,24 @@
+{
+  "name": "issue-templates",
+  "version": "1.0.0",
+  "description": "Test repository for some issue templates for the DHIL",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joeytakeda/issue-templates.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/joeytakeda/issue-templates/issues"
+  },
+  "homepage": "https://github.com/joeytakeda/issue-templates#readme",
+  "dependencies": {
+    "@actions/core": "^1.2.6",
+    "@actions/github": "^4.0.0"
+  }
+}
