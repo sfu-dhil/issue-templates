@@ -3,7 +3,7 @@ name: Main DHIL Tests Test
 # Run this workflow every time a new issue is made on the repository
 on:
   issues:
-    types: [opened]
+   types: [opened]
 
 jobs:
   # Set the job key. The key is displayed as the job name
@@ -16,11 +16,14 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+        with:
+           path: "issue-templates"
+      - run: pwd
       - uses: actions/setup-node@v2
         with:
           node-version: '14'
       - run: npm install
-
+      # - run: cd issue-templates && npm install
       - name: Test Issue-checker
         uses: ./
         id: validate
