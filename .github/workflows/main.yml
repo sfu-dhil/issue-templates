@@ -16,8 +16,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-        with:
-           path: "issue-templates"
+      #  with:
+       #    path: "issue-templates"
       - run: pwd
       - uses: actions/setup-node@v2
         with:
