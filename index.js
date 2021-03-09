@@ -21,8 +21,6 @@ const octokit = github.getOctokit(token);
 
 async function go(){
     try{
-
-
         let thisIssue = await octokit.issues.get(cfg);
         let thisIssueBody = thisIssue.data.body;
         let thisTemplate = await octokit.repos.getContent({
@@ -32,7 +30,8 @@ async function go(){
         });
         // Now get it in HTML
         let thisTemplateBody = Buffer.from(thisTemplate.data.content,'base64').toString();
-        let errors = validate(thisIssueBody, thisTemplateBody)
+        let errors = validate(thisIssueBody, thisTemplateBody);
+        console.log(errors);
         core.info(issueNumber);
 
     } catch (e){
