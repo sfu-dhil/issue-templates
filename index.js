@@ -27,12 +27,39 @@ async function go(){
         // Now get it in HTML
         let thisTemplateBody = Buffer.from(thisTemplate.data.content,'base64').toString();
         let errors = await validate(thisIssueBody, thisTemplateBody);
-        console.log(errors);
+        if (errors.length > 0){
+            console.log(`Found ${errors.length} errors....`);
+            const comment = await postComment(errors);
+            console.log('Posted comment!');
+        }
         core.info(issueNumber);
-
     } catch (e){
         console.log(e);
     }
+}
+
+async function postComment(errors){
+    const body = renderBody(errors);
+    return new Promise(async (resolve, reject) => {
+        try{
+            const comment = await octokit.issues.createComment(
+                Object.assign(cfg, {body: body})
+            );
+            resolve(comment);
+        } catch(e){
+            console.log(`ERROR: ${e}`);
+            reject(e);
+        }
+    });
+
+}
+
+function renderBody(errors){
+    let preamble = `Hi! It looks like this issue is missing ${errors.length} of the required fields: `;
+    let list = errors.map(err => `    * ${err.text}`).join("\n");
+    let suffix = `Please fill out the rest of this template by editing your above comment \ 
+(and sorry if I've erroneously flagged this as incomplete! I'm just an automaton.)`;
+    return `${preamble}\n\n${list}\n\n${suffix}`;
 }
 
 async function parseDoc(text){
@@ -62,11 +89,10 @@ async function validate(data, template) {
 
     const getIds = (frag) => {
         return [...frag.querySelectorAll('a[id $="required"]')].map(a => {
-            console.log(a);
-            console.log(a.parentElement);
+            let heading = a.parentNode;
             return {
                 'id': a.getAttribute('id'),
-                'text': a.parentElement.innerText
+                'text': heading.textContent.trim(),
             }
         });
     }
@@ -77,12 +103,9 @@ async function validate(data, template) {
             let templateHTML = await parseDoc(template);
             let requiredIds = getIds(templateHTML);
             let currIds = getIds(dataHTML).map(o => o.id);
-            console.log(currIds);
-            console.log(requiredIds);
             let errors = requiredIds.filter(o => {
                 return !currIds.includes(o.id);
             });
-            console.log(errors);
             resolve(errors);
 
         } catch(e){
@@ -94,5 +117,5 @@ async function validate(data, template) {
 }
 
 go().then(()=>{
-    console.log('ok!');
+    console.log('Finished!');
 })
