@@ -4,17 +4,7 @@ name: Main DHIL Tests Test
 on:
   issues:
    types: [opened]
-
-jobs:
-  printJob:
-    name: Print event
-    runs-on: ubuntu-latest
-    steps:
-      - name: Dump GitHub context
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: |
-          echo "$GITHUB_CONTEXT"
+   
   # Set the job key. The key is displayed as the job name
   # when a job name is not provided
   issue-checker:

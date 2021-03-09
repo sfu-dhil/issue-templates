@@ -1,11 +1,7 @@
-const { inspect } = require("util");
+
 const core = require('@actions/core');
 const github = require('@actions/github');
-const jsdom = require('jsdom');
-const { JSDOM } = jsdom;
-const dom = new JSDOM(`<!DOCTYPE html><body></body>`);
-const DOMParser = dom.window.DOMParser;
-const { promises: fs} = require('fs');
+const { JSDOM } = require('jsdom');
 const token = core.getInput('token');
 const issueNumber = core.getInput('issue-number');
 const repository = process.env.GITHUB_REPOSITORY;
@@ -30,13 +26,27 @@ async function go(){
         });
         // Now get it in HTML
         let thisTemplateBody = Buffer.from(thisTemplate.data.content,'base64').toString();
-        let errors = validate(thisIssueBody, thisTemplateBody);
+        let errors = await validate(thisIssueBody, thisTemplateBody);
         console.log(errors);
         core.info(issueNumber);
 
     } catch (e){
         console.log(e);
     }
+}
+
+async function parseDoc(text){
+    return new Promise(async (resolve, reject) => {
+        try{
+            let rendered = await octokit.markdown.render({
+                text: text
+            });
+            resolve(JSDOM.fragment(rendered.data));
+        } catch(e){
+            console.log(`ERROR: ${e}`);
+            reject(e);
+        }
+    })
 }
 
 /**
@@ -49,37 +59,38 @@ async function go(){
  */
 
 async function validate(data, template) {
-   let dataRendered = await octokit.markdown.render({
-       text: data
-   });
-   let templateRendered = await octokit.markdown.render({
-        text: template
+
+    const getIds = (frag) => {
+        return [...frag.querySelectorAll('a[id $="required"]')].map(a => {
+            console.log(a);
+            console.log(a.parentElement);
+            return {
+                'id': a.getAttribute('id'),
+                'text': a.parentElement.innerText
+            }
+        });
+    }
+
+    return new Promise(async (resolve, reject) => {
+        try {
+            let dataHTML = await parseDoc(data);
+            let templateHTML = await parseDoc(template);
+            let requiredIds = getIds(templateHTML);
+            let currIds = getIds(dataHTML).map(o => o.id);
+            console.log(currIds);
+            console.log(requiredIds);
+            let errors = requiredIds.filter(o => {
+                return !currIds.includes(o.id);
+            });
+            console.log(errors);
+            resolve(errors);
+
+        } catch(e){
+            console.log(`ERROR: ${e}`);
+            reject(e);
+        }
     });
-   console.log(dataRendered.data);
-   console.log(templateRendered.data);
 
-   let dataHTML = new DOMParser().parseFromString(dataRendered.data, 'text/html')
-   let templateHTML = new DOMParser().parseFromString(templateRendered.data, 'text/html');
-
-   let requiredIds = [...templateHTML.querySelectorAll('a[id]')]
-       .filter(a => /_required/gi.test(a.getAttribute('id')));
-   console.log(requiredIds);
-   let errors = [];
-   requiredIds.forEach(link => {
-
-       console.log(link);
-        let id = link.getAttribute('id');
-        if (dataHTML.querySelector('#' + id )){
-            return;
-        }
-        let err = {
-            'id': id,
-            'text': link.innerText
-        }
-        errors.push(err);
-   });
-   console.log(errors);
-   return errors;
 }
 
 go().then(()=>{

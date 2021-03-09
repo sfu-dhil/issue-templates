@@ -1,3 +1,6 @@
 node_modules
 .idea
 .secrets
+test.yml
+event.json
+.env
