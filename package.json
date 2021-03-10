@@ -20,6 +20,8 @@
   "dependencies": {
     "@actions/core": "^1.2.6",
     "@actions/github": "^4.0.0",
-    "jsdom": "^16.4.0"
+    "gray-matter": "^4.0.2",
+    "jsdom": "^16.4.0",
+    "marked": "^2.0.1"
   }
 }

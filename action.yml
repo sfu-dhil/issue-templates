@@ -3,14 +3,16 @@ description: 'Checks issues'
 inputs:
   token:
     description: 'GITHUB_TOKEN or a repo scoped PAT.'
-  repository:
-    description: 'The full name of the repository in which to create or update a comment.'
   issue-number:
     description: 'The number of the issue or pull request in which to create a comment.'
-  comment-id:
-    description: 'The id of the comment to update.'
-  body:
-    description: 'The comment body.'
+  templates:
+    description: 'An array of template names: ["bug_report.md", "feature_request.md"]'
+    required: false
+    default: '["bug_report.md", "feature_request.md"]'
+  comment:
+    description: 'Boolean whether or not to post a comment. Mostly used for debugging'
+    required: false
+    default: 'true'
 runs:
   using: 'node12'
   main: 'dist/index.js'
