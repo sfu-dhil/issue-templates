@@ -2,9 +2,8 @@
 name: Bug report
 about: Create a report to help us improve
 title: ''
-labels: ''
+labels: 'bug'
 assignees: ''
-
 ---
 
 ## Describe the Bug (required)
@@ -27,7 +26,6 @@ Steps to reproduce the behavior:
 * Operating system (e.g. iOS, Windows)
 * Desktop or Smartphone?:
 * Browser and browser version (e.g. Chrome 22):
-* 
 
 ## Screenshots (optional)
 Provide screenshots, if applicable

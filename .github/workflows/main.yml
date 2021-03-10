@@ -19,11 +19,10 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: '14'
-      - run: npm install
-      # - run: cd issue-templates && npm install
       - name: Test Issue-checker
         uses: ./
         id: validate
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           issue-number: ${{ github.event.issue.number }}
+          templates: ""
