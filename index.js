@@ -156,10 +156,14 @@ async function validate(issue) {
         let fields = [];
         let children = [...frag.children];
         for (const el of children){
-            const isHeading = el.tagName === "H2";
+            const isHeading = /^H\d+$/g.test(el.tagName);
             const thisId = el.getAttribute('id');
             const isRequired = thisId ? thisId.endsWith('required') : false;
             const textContent = el.textContent.replace('/[\s\n\t]+/gi',' ').trim();
+            if (isHeading && !isRequired){
+                // Just skip headings from the textContent
+                return;
+            }
             if (isHeading && isRequired){
                 let obj = {
                     id: thisId,
