@@ -4,7 +4,8 @@
   "description": "Test repository for some issue templates for the DHIL",
   "main": "index.js",
   "scripts": {
-    "dist": "ncc build index.js -o dist --source-map"
+    "dist": "ncc build index.js -o dist --source-map --minify",
+    "watch": "ncc build index.js -o dist --source-map --minify --watch"
   },
   "repository": {
     "type": "git",

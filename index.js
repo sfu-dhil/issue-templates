@@ -114,7 +114,7 @@ function renderComment(errors){
     let preamble = `Hi! It looks like this ${errors[0].name.toLowerCase()} is missing content for the following required field${errors.length > 1 ? 's' : ''}: `;
     let list = errors.map(err => `    * ${err.text}`).join("\n");
     let suffix = `Please fill out the rest of this template by editing your above comment \ 
-(and sorry if I've erroneously flagged this as incomplete! I'm just an automaton.)`;
+(and sorry if I've wrongly flagged this as incomplete! I'm just an automaton 🤖.)`;
     return `${preamble}\n\n${list}\n\n${suffix}`;
 }
 
@@ -160,10 +160,6 @@ async function validate(issue) {
             const thisId = el.getAttribute('id');
             const isRequired = thisId ? thisId.endsWith('required') : false;
             const textContent = el.textContent.replace('/[\s\n\t]+/gi',' ').trim();
-            if (isHeading && !isRequired){
-                // Just skip headings from the textContent
-                return;
-            }
             if (isHeading && isRequired){
                 let obj = {
                     id: thisId,
@@ -171,6 +167,8 @@ async function validate(issue) {
                     boilerplate: ""
                 }
                 fields.push(obj);
+            } else if (isHeading && !isRequired){
+
             } else {
                 if (fields.length > 0){
                     fields[fields.length -1].boilerplate += " " + textContent;
