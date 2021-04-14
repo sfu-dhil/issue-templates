@@ -4,7 +4,7 @@
   "description": "Test repository for some issue templates for the DHIL",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dist": "ncc build index.js -o dist --source-map"
   },
   "repository": {
     "type": "git",
@@ -23,5 +23,8 @@
     "gray-matter": "^4.0.2",
     "jsdom": "^16.4.0",
     "marked": "^2.0.1"
+  },
+  "devDependencies": {
+    "@vercel/ncc": "^0.28.3"
   }
 }
