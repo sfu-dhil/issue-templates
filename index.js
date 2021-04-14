@@ -1,3 +1,11 @@
+/**
+ * GitHub Action for validating an issue against a given template
+ *
+ * @author Joey Takeda (github.com/joeytakeda)
+ * @date 2021
+ *
+ */
+
 
 const core = require('@actions/core');
 const github = require('@actions/github');
