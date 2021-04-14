@@ -1,5 +1,5 @@
 name: 'Issue Checker'
-description: 'Checks issues'
+description: 'Automatic issue validator that makes sure people use templates, and use them meaningfully.'
 inputs:
   token:
     description: 'GITHUB_TOKEN or a repo scoped PAT.'
