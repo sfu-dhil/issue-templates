@@ -6,29 +6,25 @@ labels: 'bug'
 assignees: ''
 ---
 
-## Describe the Bug (required)
-*A clear and concise description of what the bug is and the problem.*
+# Describe the issue
 
-## Expected behavior (required)
-*A clear and concise description of what you expected to happen.*
+## What isn’t working as expected on the website? (Required)
 
-## How to Reproduce (required)
-Steps to reproduce the behavior:
-1. Go to '...'
-2. Click on '....'
-3. Scroll down to '....'
-4. See error
+## If you encountered an error message, please take a screenshot and paste it below. (Required)
 
-*If applicable provide the URL of the page and any error information given on the page*
+## Is this the first time the error occurred? If not, describe its frequency. (Required)
 
-## Environment (required)
 
-* Operating system (e.g. iOS, Windows)
-* Desktop or Smartphone?:
-* Browser and browser version (e.g. Chrome 22):
+# Help us to reproduce the issue
 
-## Screenshots (optional)
-Provide screenshots, if applicable
+## What is the URL of the page where you encountered the bug? [Type NA if not applicable] (Required)
+
+## What steps were taken before you encountered the bug? (Required)
+
+
+# Additional context
+
+## What browser, operating system, and device were you using when you encountered the error? (Required)
 
 ## Possible solutions (optional)
 Possible solutions.
