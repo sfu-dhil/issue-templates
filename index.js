@@ -114,7 +114,7 @@ function renderComment(errors){
     let preamble = `Hi! It looks like this ${errors[0].name.toLowerCase()} is missing content for the following required field${errors.length > 1 ? 's' : ''}: `;
     let list = errors.map(err => `    * ${err.text}`).join("\n");
     let suffix = `Please fill out the rest of this template by editing your above comment \ 
-(and sorry if I've wrongly flagged this as incomplete! I'm just an automaton 🤖.)`;
+(and sorry if I've wrongly flagged this as incomplete! I'm just an robot :robot:.)`;
     return `${preamble}\n\n${list}\n\n${suffix}`;
 }
 
